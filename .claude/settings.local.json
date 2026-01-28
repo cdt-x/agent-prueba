@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python setup.py:*)",
+      "Bash(py:*)",
+      "Bash(where:*)",
+      "Bash(winget:*)",
+      "Bash(export PATH=\"/c/Users/aleja/AppData/Local/Programs/Python/Python312:/c/Users/aleja/AppData/Local/Programs/Python/Python312/Scripts:$PATH\")",
+      "Bash(python -m pip install:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(iconv:*)",
+      "Bash(PYTHONIOENCODING=utf-8 python:*)",
+      "Bash(timeout:*)",
+      "Bash(ping:*)"
+    ]
+  }
+}

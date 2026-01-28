@@ -1,0 +1,160 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    AGENTE VENDEDOR DE IA - RESUMEN                           ║
+║                         IAgentic Solutions                                   ║
+║                      Fecha: 27 de Enero 2026                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+================================================================================
+                              ESTADO DE INSTALACIÓN
+================================================================================
+
+✓ Python 3.12.10          - Instalado
+✓ Pip 25.3                - Instalado
+✓ OpenAI SDK              - Instalado
+✓ Anthropic SDK           - Instalado
+✓ Rich (interfaz bonita)  - Instalado
+✓ Pydantic                - Instalado
+✓ Prompt-toolkit          - Instalado
+✓ Python-dotenv           - Instalado
+
+================================================================================
+                              UBICACIÓN DEL PROYECTO
+================================================================================
+
+Carpeta: C:\Users\aleja\OneDrive\Escritorio\iagent
+
+================================================================================
+                              CÓMO EJECUTAR
+================================================================================
+
+OPCIÓN 1 - DOBLE CLIC (MÁS FÁCIL):
+----------------------------------
+   • iniciar_agente.bat  → Chat en consola
+   • iniciar_web.bat     → Chat en navegador (http://localhost:5000)
+
+OPCIÓN 2 - DESDE TERMINAL:
+--------------------------
+   cd C:\Users\aleja\OneDrive\Escritorio\iagent
+   python simple_chat.py        (versión simple)
+   python main.py               (versión con colores)
+   python web_app.py            (versión web)
+
+OPCIÓN 3 - VER DEMO AUTOMÁTICA:
+-------------------------------
+   python examples/demo_conversation.py
+
+================================================================================
+                              ESTRUCTURA DEL PROYECTO
+================================================================================
+
+iagent/
+├── main.py                  ← Interfaz completa con colores
+├── simple_chat.py           ← Interfaz simple (recomendada)
+├── web_app.py               ← Interfaz web con Flask
+├── iniciar_agente.bat       ← Doble clic para iniciar
+├── iniciar_web.bat          ← Doble clic para versión web
+├── setup.py                 ← Instalador
+├── requirements.txt         ← Dependencias
+├── .env                     ← Configuración (editar para API keys)
+├── README.md                ← Documentación completa
+│
+├── config/                  ← Configuración
+│   ├── settings.py          ← Ajustes generales
+│   └── products.py          ← Catálogo de 7 productos
+│
+├── core/                    ← Núcleo del agente
+│   ├── agent.py             ← Agente principal (Luna)
+│   ├── conversation.py      ← Manejo de conversación SPIN
+│   └── customer_profile.py  ← Perfilamiento automático
+│
+├── ui/                      ← Interfaces
+│   └── console.py           ← UI de consola rica
+│
+├── utils/                   ← Utilidades
+│   ├── helpers.py           ← Funciones auxiliares
+│   └── analytics.py         ← Tracking de conversiones
+│
+├── integrations/            ← Integraciones externas
+│   ├── crm.py               ← HubSpot, Salesforce, local
+│   ├── email.py             ← Notificaciones por email
+│   └── webhook.py           ← Sistema de eventos
+│
+├── examples/                ← Ejemplos
+│   ├── demo_conversation.py ← Demo automática
+│   └── custom_agent.py      ← Cómo personalizar
+│
+└── data/                    ← Datos generados
+    ├── leads.json           ← Leads capturados
+    └── analytics.json       ← Métricas
+
+================================================================================
+                              PRODUCTOS INCLUIDOS
+================================================================================
+
+1. Agente de Atención al Cliente 24/7    - $299/mes  (1-2 semanas)
+2. Agente de Ventas Inteligente          - $499/mes  (2-3 semanas)
+3. Agente de Recursos Humanos            - $399/mes  (2-3 semanas)
+4. Tutor IA Personalizado                - $349/mes  (2-4 semanas)
+5. Asistente Legal IA                    - $599/mes  (3-4 semanas)
+6. Asistente Médico IA                   - $699/mes  (3-5 semanas)
+7. Agente Personalizado                  - Cotización (4-8 semanas)
+
+================================================================================
+                              CARACTERÍSTICAS
+================================================================================
+
+• Perfilamiento automático de clientes (industria, tipo, urgencia)
+• Metodología de ventas SPIN (Situación, Problema, Implicación, Necesidad)
+• Manejo inteligente de objeciones (precio, tiempo, confianza, técnico)
+• Detección de industrias: retail, salud, educación, legal, tech, finanzas
+• Analytics y tracking de conversiones
+• Integraciones: CRM, Email, Webhooks
+• 3 interfaces: consola, texto simple, web
+
+================================================================================
+                              MODO ACTUAL: DEMO
+================================================================================
+
+El agente funciona con respuestas predefinidas inteligentes.
+
+Para usar IA REAL (GPT-4 o Claude), edita el archivo .env:
+
+   Archivo: C:\Users\aleja\OneDrive\Escritorio\iagent\.env
+
+   Descomenta y agrega tu clave:
+   OPENAI_API_KEY=sk-tu-clave-real-de-openai
+
+   O para Claude:
+   ANTHROPIC_API_KEY=sk-ant-tu-clave-real
+
+================================================================================
+                              COMANDOS DURANTE CHAT
+================================================================================
+
+/ayuda      - Ver comandos disponibles
+/productos  - Ver catálogo de productos
+/perfil     - Ver perfil del cliente detectado
+/resumen    - Ver resumen de conversación
+/reiniciar  - Nueva conversación
+/salir      - Finalizar y salir
+
+================================================================================
+                              PERSONALIZACIÓN
+================================================================================
+
+Para cambiar nombre del agente/empresa:
+   Editar: .env
+
+Para modificar productos:
+   Editar: config/products.py
+
+Para cambiar personalidad del agente:
+   Editar: core/conversation.py (buscar system_prompt)
+
+================================================================================
+                              SOPORTE
+================================================================================
+
+README completo: C:\Users\aleja\OneDrive\Escritorio\iagent\README.md
+
+================================================================================
