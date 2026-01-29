@@ -478,9 +478,44 @@ CONFIG_PAGE = """
         <div class="preset-btns">
             <span class="preset-btn" onclick="setPreset('abogado')">Abogado</span>
             <span class="preset-btn" onclick="setPreset('medico')">Medico</span>
+            <span class="preset-btn" onclick="setPreset('odontologo')">Odontologo</span>
+            <span class="preset-btn" onclick="setPreset('psicologo')">Psicologo</span>
+            <span class="preset-btn" onclick="setPreset('veterinaria')">Veterinaria</span>
             <span class="preset-btn" onclick="setPreset('restaurante')">Restaurante</span>
+            <span class="preset-btn" onclick="setPreset('cafeteria')">Cafeteria</span>
+            <span class="preset-btn" onclick="setPreset('bar')">Bar/Discoteca</span>
             <span class="preset-btn" onclick="setPreset('inmobiliaria')">Inmobiliaria</span>
+            <span class="preset-btn" onclick="setPreset('constructora')">Constructora</span>
             <span class="preset-btn" onclick="setPreset('ecommerce')">E-commerce</span>
+            <span class="preset-btn" onclick="setPreset('tienda')">Tienda Fisica</span>
+            <span class="preset-btn" onclick="setPreset('gimnasio')">Gimnasio</span>
+            <span class="preset-btn" onclick="setPreset('spa')">Spa/Belleza</span>
+            <span class="preset-btn" onclick="setPreset('peluqueria')">Peluqueria</span>
+            <span class="preset-btn" onclick="setPreset('hotel')">Hotel</span>
+            <span class="preset-btn" onclick="setPreset('agencia_viajes')">Agencia Viajes</span>
+            <span class="preset-btn" onclick="setPreset('contador')">Contador</span>
+            <span class="preset-btn" onclick="setPreset('academia')">Academia/Cursos</span>
+            <span class="preset-btn" onclick="setPreset('colegio')">Colegio</span>
+            <span class="preset-btn" onclick="setPreset('universidad')">Universidad</span>
+            <span class="preset-btn" onclick="setPreset('aseguradora')">Aseguradora</span>
+            <span class="preset-btn" onclick="setPreset('banco')">Banco/Finanzas</span>
+            <span class="preset-btn" onclick="setPreset('taller')">Taller Mecanico</span>
+            <span class="preset-btn" onclick="setPreset('concesionario')">Concesionario</span>
+            <span class="preset-btn" onclick="setPreset('ferreteria')">Ferreteria</span>
+            <span class="preset-btn" onclick="setPreset('farmacia')">Farmacia</span>
+            <span class="preset-btn" onclick="setPreset('optica')">Optica</span>
+            <span class="preset-btn" onclick="setPreset('funeraria')">Funeraria</span>
+            <span class="preset-btn" onclick="setPreset('imprenta')">Imprenta</span>
+            <span class="preset-btn" onclick="setPreset('software')">Software/Tech</span>
+            <span class="preset-btn" onclick="setPreset('marketing')">Agencia Marketing</span>
+            <span class="preset-btn" onclick="setPreset('arquitecto')">Arquitecto</span>
+            <span class="preset-btn" onclick="setPreset('fotografo')">Fotografo</span>
+            <span class="preset-btn" onclick="setPreset('eventos')">Eventos/Bodas</span>
+            <span class="preset-btn" onclick="setPreset('transporte')">Transporte/Logistica</span>
+            <span class="preset-btn" onclick="setPreset('limpieza')">Servicios Limpieza</span>
+            <span class="preset-btn" onclick="setPreset('seguridad')">Seguridad Privada</span>
+            <span class="preset-btn" onclick="setPreset('coworking')">Coworking</span>
+            <span class="preset-btn" onclick="setPreset('notaria')">Notaria</span>
         </div>
 
         <form action="/demo" method="GET">
@@ -513,32 +548,242 @@ CONFIG_PAGE = """
             abogado: {
                 empresa: "Bufete Legal Ejemplo",
                 tipo: "servicios legales",
-                servicios: "asesoria legal, contratos, divorcios, demandas civiles, derecho corporativo",
+                servicios: "asesoria legal, contratos, divorcios, demandas civiles, derecho corporativo, derecho laboral",
                 horario: "Lunes a Viernes 9am-7pm"
             },
             medico: {
                 empresa: "Clinica Salud Integral",
                 tipo: "servicios medicos",
-                servicios: "consultas generales, pediatria, ginecologia, medicina interna, laboratorio",
+                servicios: "consultas generales, pediatria, ginecologia, medicina interna, laboratorio, urgencias",
                 horario: "Lunes a Sabado 8am-8pm"
+            },
+            odontologo: {
+                empresa: "Sonrisas Dental",
+                tipo: "odontologia",
+                servicios: "limpieza dental, ortodoncia, blanqueamiento, implantes, endodoncia, odontopediatria",
+                horario: "Lunes a Sabado 8am-6pm"
+            },
+            psicologo: {
+                empresa: "Centro de Bienestar Mental",
+                tipo: "psicologia",
+                servicios: "terapia individual, terapia de pareja, terapia familiar, ansiedad, depresion, coaching",
+                horario: "Lunes a Viernes 8am-8pm, Sabados 9am-2pm"
+            },
+            veterinaria: {
+                empresa: "Veterinaria Amigos Peludos",
+                tipo: "veterinaria",
+                servicios: "consultas, vacunacion, cirugia, peluqueria canina, hotel para mascotas, emergencias 24h",
+                horario: "Lunes a Domingo 8am-8pm"
             },
             restaurante: {
                 empresa: "Restaurante El Buen Sabor",
                 tipo: "gastronomia",
-                servicios: "comida colombiana, almuerzos ejecutivos, eventos privados, domicilios",
+                servicios: "comida colombiana, almuerzos ejecutivos, eventos privados, domicilios, catering",
                 horario: "Lunes a Domingo 11am-10pm"
+            },
+            cafeteria: {
+                empresa: "Cafe Aroma",
+                tipo: "cafeteria",
+                servicios: "cafe de especialidad, desayunos, postres, wifi gratis, espacio coworking",
+                horario: "Lunes a Domingo 7am-9pm"
+            },
+            bar: {
+                empresa: "Bar La Noche",
+                tipo: "entretenimiento nocturno",
+                servicios: "cocteleria, musica en vivo, reserva de mesas VIP, eventos privados, cumpleanos",
+                horario: "Jueves a Sabado 8pm-3am"
             },
             inmobiliaria: {
                 empresa: "Inmobiliaria Tu Hogar",
                 tipo: "bienes raices",
-                servicios: "venta de casas y apartamentos, arriendos, avaluos, asesoria de credito",
+                servicios: "venta de casas y apartamentos, arriendos, avaluos, asesoria de credito hipotecario",
                 horario: "Lunes a Sabado 8am-6pm"
+            },
+            constructora: {
+                empresa: "Constructora Solida",
+                tipo: "construccion",
+                servicios: "proyectos residenciales, remodelaciones, acabados, presupuestos, asesoria tecnica",
+                horario: "Lunes a Viernes 8am-6pm, Sabados 8am-1pm"
             },
             ecommerce: {
                 empresa: "TiendaOnline.com",
                 tipo: "comercio electronico",
-                servicios: "venta de productos, seguimiento de pedidos, cambios y devoluciones",
+                servicios: "venta de productos, seguimiento de pedidos, cambios y devoluciones, garantias",
                 horario: "24/7 - Soporte en horario de oficina"
+            },
+            tienda: {
+                empresa: "Tienda La Esquina",
+                tipo: "comercio minorista",
+                servicios: "venta de productos, apartados, domicilios, pedidos por WhatsApp, promociones",
+                horario: "Lunes a Sabado 8am-8pm, Domingos 9am-2pm"
+            },
+            gimnasio: {
+                empresa: "Fitness Total Gym",
+                tipo: "gimnasio",
+                servicios: "musculacion, clases grupales, spinning, yoga, entrenador personal, nutricionista",
+                horario: "Lunes a Viernes 5am-10pm, Sabados 6am-6pm, Domingos 7am-2pm"
+            },
+            spa: {
+                empresa: "Spa Relax & Beauty",
+                tipo: "spa y belleza",
+                servicios: "masajes, tratamientos faciales, manicure, pedicure, depilacion, dia de spa",
+                horario: "Lunes a Sabado 9am-8pm"
+            },
+            peluqueria: {
+                empresa: "Estilo Hair Studio",
+                tipo: "peluqueria",
+                servicios: "corte, tintura, mechas, alisado, peinados, barberia, tratamientos capilares",
+                horario: "Martes a Sabado 9am-7pm"
+            },
+            hotel: {
+                empresa: "Hotel Plaza Colonial",
+                tipo: "hoteleria",
+                servicios: "habitaciones, suites, restaurante, eventos, piscina, spa, transporte aeropuerto",
+                horario: "24/7 - Recepcion siempre disponible"
+            },
+            agencia_viajes: {
+                empresa: "Viajes y Aventuras",
+                tipo: "agencia de viajes",
+                servicios: "paquetes turisticos, tiquetes aereos, hoteles, cruceros, visas, seguros de viaje",
+                horario: "Lunes a Viernes 9am-6pm, Sabados 9am-1pm"
+            },
+            contador: {
+                empresa: "Contadores Asociados",
+                tipo: "contabilidad",
+                servicios: "declaracion de renta, contabilidad empresarial, nomina, impuestos, asesoria tributaria",
+                horario: "Lunes a Viernes 8am-6pm"
+            },
+            academia: {
+                empresa: "Academia de Idiomas Global",
+                tipo: "educacion",
+                servicios: "cursos de ingles, frances, aleman, clases particulares, preparacion examenes internacionales",
+                horario: "Lunes a Sabado 7am-9pm"
+            },
+            colegio: {
+                empresa: "Colegio Nueva Generacion",
+                tipo: "educacion escolar",
+                servicios: "preescolar, primaria, bachillerato, actividades extracurriculares, transporte escolar",
+                horario: "Lunes a Viernes 6:30am-4pm"
+            },
+            universidad: {
+                empresa: "Universidad del Futuro",
+                tipo: "educacion superior",
+                servicios: "pregrados, posgrados, educacion virtual, becas, intercambios, extension universitaria",
+                horario: "Lunes a Viernes 7am-9pm, Sabados 8am-5pm"
+            },
+            aseguradora: {
+                empresa: "Seguros Confianza",
+                tipo: "seguros",
+                servicios: "seguro de vida, seguro vehicular, seguro de hogar, seguro de salud, SOAT",
+                horario: "Lunes a Viernes 8am-5pm"
+            },
+            banco: {
+                empresa: "Banco Digital Plus",
+                tipo: "servicios financieros",
+                servicios: "cuentas de ahorro, creditos, tarjetas, inversiones, pagos, transferencias",
+                horario: "Lunes a Viernes 8am-4pm, App 24/7"
+            },
+            taller: {
+                empresa: "Taller Mecanico AutoFix",
+                tipo: "taller mecanico",
+                servicios: "mantenimiento preventivo, reparaciones, frenos, suspension, electricidad automotriz",
+                horario: "Lunes a Sabado 7am-6pm"
+            },
+            concesionario: {
+                empresa: "Autos Premium",
+                tipo: "concesionario",
+                servicios: "venta de vehiculos nuevos y usados, financiacion, seguros, servicio tecnico, repuestos",
+                horario: "Lunes a Sabado 8am-7pm, Domingos 10am-4pm"
+            },
+            ferreteria: {
+                empresa: "Ferreteria El Constructor",
+                tipo: "ferreteria",
+                servicios: "materiales de construccion, herramientas, plomeria, electricidad, pinturas, domicilios",
+                horario: "Lunes a Sabado 7am-7pm, Domingos 8am-2pm"
+            },
+            farmacia: {
+                empresa: "Farmacia Salud Total",
+                tipo: "farmacia",
+                servicios: "medicamentos, formula medica, inyectologia, toma de presion, domicilios 24h",
+                horario: "24 horas, 7 dias a la semana"
+            },
+            optica: {
+                empresa: "Optica Vision Clara",
+                tipo: "optica",
+                servicios: "examen visual, lentes formulados, lentes de contacto, gafas de sol, monturas",
+                horario: "Lunes a Sabado 9am-7pm"
+            },
+            funeraria: {
+                empresa: "Funeraria La Paz",
+                tipo: "servicios funerarios",
+                servicios: "servicios exequiales, cremacion, traslados, planes de prevision, asesoria legal",
+                horario: "24/7 - Siempre disponibles"
+            },
+            imprenta: {
+                empresa: "Imprenta Grafica Express",
+                tipo: "imprenta",
+                servicios: "tarjetas, volantes, pendones, libros, papeleria corporativa, diseno grafico",
+                horario: "Lunes a Viernes 8am-6pm, Sabados 8am-1pm"
+            },
+            software: {
+                empresa: "Tech Solutions",
+                tipo: "tecnologia",
+                servicios: "desarrollo de software, apps moviles, paginas web, soporte IT, consultoria tecnologica",
+                horario: "Lunes a Viernes 8am-6pm, Soporte 24/7"
+            },
+            marketing: {
+                empresa: "Agencia Digital Creativa",
+                tipo: "marketing digital",
+                servicios: "redes sociales, publicidad digital, SEO, diseno web, branding, contenido audiovisual",
+                horario: "Lunes a Viernes 9am-6pm"
+            },
+            arquitecto: {
+                empresa: "Arquitectura & Diseno",
+                tipo: "arquitectura",
+                servicios: "diseno arquitectonico, planos, remodelaciones, diseno de interiores, tramites de construccion",
+                horario: "Lunes a Viernes 8am-6pm"
+            },
+            fotografo: {
+                empresa: "Foto Studio Pro",
+                tipo: "fotografia",
+                servicios: "bodas, eventos, retratos, fotografia de producto, video, edicion profesional",
+                horario: "Lunes a Sabado 9am-7pm, eventos fines de semana"
+            },
+            eventos: {
+                empresa: "Eventos & Celebraciones",
+                tipo: "organizacion de eventos",
+                servicios: "bodas, quince anos, eventos corporativos, decoracion, catering, animacion",
+                horario: "Lunes a Viernes 9am-6pm, eventos fines de semana"
+            },
+            transporte: {
+                empresa: "Transportes Rapidos",
+                tipo: "transporte y logistica",
+                servicios: "envios nacionales, mensajeria, mudanzas, carga pesada, rastreo en tiempo real",
+                horario: "Lunes a Sabado 6am-8pm"
+            },
+            limpieza: {
+                empresa: "Limpieza Total",
+                tipo: "servicios de limpieza",
+                servicios: "limpieza de hogares, oficinas, post-construccion, limpieza de vidrios, desinfeccion",
+                horario: "Lunes a Sabado 7am-6pm"
+            },
+            seguridad: {
+                empresa: "Seguridad Elite",
+                tipo: "seguridad privada",
+                servicios: "vigilancia, escoltas, monitoreo CCTV, alarmas, seguridad para eventos",
+                horario: "24/7 - Central de monitoreo"
+            },
+            coworking: {
+                empresa: "Espacio Cowork Hub",
+                tipo: "coworking",
+                servicios: "escritorios flexibles, oficinas privadas, salas de reunion, domicilio fiscal, networking",
+                horario: "Lunes a Viernes 7am-10pm, Sabados 8am-6pm"
+            },
+            notaria: {
+                empresa: "Notaria 45",
+                tipo: "notaria",
+                servicios: "escrituras, autenticaciones, poderes, matrimonios, declaraciones juramentadas, apostilla",
+                horario: "Lunes a Viernes 8am-5pm"
             }
         };
 
