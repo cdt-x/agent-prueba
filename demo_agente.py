@@ -477,7 +477,7 @@ CONFIG_PAGE = """
             <label>Tipo de negocio (plantilla)</label>
             <select id="presetSelect" onchange="setPreset(this.value)">
                 <option value="">-- Selecciona una industria --</option>
-                <option value="personalizado">Otro / Personalizado (llenar manual)</option>
+                <option value="personalizado">Otro / Personalizado</option>
                 <optgroup label="Salud">
                     <option value="medico">Medico / Clinica</option>
                     <option value="odontologo">Odontologo</option>
@@ -925,4 +925,4 @@ if __name__ == '__main__':
     print("\n  Presiona Ctrl+C para cerrar")
     print("="*50 + "\n")
 
-    app.run(debug=False, host='0.0.0.0', port=5055)
+    app.run(debug=False, host='0.0.0.0', port=8080)
