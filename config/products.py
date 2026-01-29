@@ -1,162 +1,141 @@
-"""Catálogo de productos y servicios de agentes de IA."""
+"""Catálogo de productos y servicios de QORAX - Agentes de IA."""
 
 from typing import Dict, List, Any
 
+# Configuración de la empresa
+EMPRESA = {
+    "nombre": "Qorax",
+    "slogan": "Agentes de IA que atienden tu negocio 24/7",
+    "pais": "Colombia",
+    "moneda": "COP",
+    "setup_base": "$1,500,000 COP",
+    "mensualidad_base": "$250,000 COP/mes"
+}
+
 PRODUCT_CATALOG: Dict[str, Dict[str, Any]] = {
-    "asistente_atencion_cliente": {
-        "nombre": "Agente de Atención al Cliente 24/7",
-        "descripcion": "Agente de IA que atiende consultas de clientes las 24 horas, los 7 días de la semana",
+    "agente_whatsapp": {
+        "nombre": "Agente WhatsApp 24/7",
+        "descripcion": "Agente de IA que responde tu WhatsApp automaticamente las 24 horas",
         "beneficios": [
-            "Disponibilidad total sin costos de personal nocturno",
-            "Respuestas instantáneas a preguntas frecuentes",
-            "Escalamiento inteligente a agentes humanos cuando es necesario",
-            "Soporte multiidioma automático",
-            "Reducción del 70% en tiempos de espera"
+            "Responde clientes en segundos, incluso a las 3am",
+            "Agenda citas automaticamente",
+            "Responde preguntas frecuentes sin cansarse",
+            "Tu negocio nunca duerme",
+            "Cuesta menos que un almuerzo diario"
         ],
         "casos_uso": [
-            "E-commerce y tiendas online",
-            "Servicios financieros",
-            "Telecomunicaciones",
-            "Salud y bienestar",
-            "Educación online"
+            "Doctores y clinicas",
+            "Abogados",
+            "Restaurantes",
+            "Tiendas",
+            "Cualquier negocio"
         ],
-        "precio_base": "Desde $299/mes",
-        "tiempo_implementacion": "1-2 semanas"
+        "precio_setup": "$1,500,000 COP",
+        "precio_mensual": "$250,000 COP/mes",
+        "precio_base": "$1,500,000 + $250,000/mes",
+        "tiempo_implementacion": "5-7 dias"
     },
 
-    "asistente_ventas": {
-        "nombre": "Agente de Ventas Inteligente",
-        "descripcion": "Agente especializado en calificar leads, presentar productos y cerrar ventas",
+    "agente_basico": {
+        "nombre": "Agente Basico",
+        "descripcion": "Agente para responder preguntas frecuentes y dar informacion",
         "beneficios": [
-            "Calificación automática de prospectos 24/7",
-            "Seguimiento persistente sin ser invasivo",
-            "Personalización de ofertas según el perfil del cliente",
-            "Integración con CRM existente",
-            "Aumento promedio del 40% en conversiones"
+            "Responde preguntas frecuentes 24/7",
+            "Da informacion de precios y servicios",
+            "Facil de configurar",
+            "Ideal para empezar",
+            "El mas economico"
+        ],
+        "casos_uso": [
+            "Negocios pequenos",
+            "Emprendedores",
+            "Profesionales independientes"
+        ],
+        "precio_setup": "$997,000 COP",
+        "precio_mensual": "$197,000 COP/mes",
+        "precio_base": "$997,000 + $197,000/mes",
+        "tiempo_implementacion": "3-5 dias"
+    },
+
+    "agente_ventas": {
+        "nombre": "Agente de Ventas",
+        "descripcion": "Agente especializado en calificar clientes y cerrar ventas",
+        "beneficios": [
+            "Califica clientes automaticamente",
+            "Hace seguimiento sin ser invasivo",
+            "Envia cotizaciones",
+            "Agenda reuniones de cierre",
+            "Aumenta tus ventas mientras duermes"
         ],
         "casos_uso": [
             "Inmobiliarias",
-            "Concesionarios de autos",
-            "Software y SaaS",
+            "Concesionarios",
             "Servicios profesionales",
-            "Retail y comercio"
+            "Cualquier negocio B2B"
         ],
-        "precio_base": "Desde $499/mes",
-        "tiempo_implementacion": "2-3 semanas"
+        "precio_setup": "$1,800,000 COP",
+        "precio_mensual": "$350,000 COP/mes",
+        "precio_base": "$1,800,000 + $350,000/mes",
+        "tiempo_implementacion": "7-10 dias"
     },
 
-    "asistente_rrhh": {
-        "nombre": "Agente de Recursos Humanos",
-        "descripcion": "Agente para automatizar procesos de RRHH y atención a empleados",
+    "agente_citas": {
+        "nombre": "Agente de Citas",
+        "descripcion": "Agente especializado en agendar y gestionar citas",
         "beneficios": [
-            "Respuestas automáticas sobre políticas y beneficios",
-            "Gestión de solicitudes de vacaciones y permisos",
-            "Onboarding automatizado de nuevos empleados",
-            "Encuestas de clima laboral inteligentes",
-            "Reducción del 60% en consultas repetitivas al área de RRHH"
+            "Agenda citas 24/7 sin errores",
+            "Envia recordatorios automaticos",
+            "Permite reagendar facilmente",
+            "Se conecta con tu calendario",
+            "Reduce las citas perdidas en 80%"
         ],
         "casos_uso": [
-            "Empresas medianas y grandes",
-            "Startups en crecimiento",
-            "Multinacionales",
-            "Empresas con trabajo remoto"
+            "Doctores y clinicas",
+            "Dentistas",
+            "Abogados",
+            "Salones de belleza",
+            "Cualquier negocio con citas"
         ],
-        "precio_base": "Desde $399/mes",
-        "tiempo_implementacion": "2-3 semanas"
-    },
-
-    "asistente_educativo": {
-        "nombre": "Tutor IA Personalizado",
-        "descripcion": "Agente educativo que adapta el aprendizaje al ritmo de cada estudiante",
-        "beneficios": [
-            "Aprendizaje adaptativo según el nivel del estudiante",
-            "Disponibilidad 24/7 para resolver dudas",
-            "Generación automática de ejercicios y evaluaciones",
-            "Seguimiento del progreso en tiempo real",
-            "Motivación y gamificación del aprendizaje"
-        ],
-        "casos_uso": [
-            "Instituciones educativas",
-            "Plataformas de e-learning",
-            "Capacitación corporativa",
-            "Academias y cursos online"
-        ],
-        "precio_base": "Desde $349/mes",
-        "tiempo_implementacion": "2-4 semanas"
-    },
-
-    "asistente_legal": {
-        "nombre": "Asistente Legal IA",
-        "descripcion": "Agente especializado en consultas legales básicas y gestión documental",
-        "beneficios": [
-            "Respuestas rápidas a consultas legales frecuentes",
-            "Generación de documentos legales básicos",
-            "Organización y búsqueda inteligente de documentos",
-            "Alertas de vencimientos y plazos",
-            "Reducción de horas administrativas en un 50%"
-        ],
-        "casos_uso": [
-            "Despachos de abogados",
-            "Departamentos legales corporativos",
-            "Notarías",
-            "Consultoras legales"
-        ],
-        "precio_base": "Desde $599/mes",
-        "tiempo_implementacion": "3-4 semanas"
-    },
-
-    "asistente_medico": {
-        "nombre": "Asistente Médico IA",
-        "descripcion": "Agente para triaje inicial, citas y seguimiento de pacientes",
-        "beneficios": [
-            "Triaje inicial automatizado 24/7",
-            "Gestión inteligente de citas médicas",
-            "Recordatorios de medicamentos y tratamientos",
-            "Seguimiento post-consulta automatizado",
-            "Reducción del 40% en llamadas a recepción"
-        ],
-        "casos_uso": [
-            "Clínicas y consultorios",
-            "Hospitales",
-            "Farmacias",
-            "Telemedicina"
-        ],
-        "precio_base": "Desde $699/mes",
-        "tiempo_implementacion": "3-5 semanas"
+        "precio_setup": "$1,500,000 COP",
+        "precio_mensual": "$280,000 COP/mes",
+        "precio_base": "$1,500,000 + $280,000/mes",
+        "tiempo_implementacion": "5-7 dias"
     },
 
     "agente_personalizado": {
-        "nombre": "Agente IA Personalizado",
-        "descripcion": "Desarrollo a medida de un agente adaptado 100% a tus necesidades específicas",
+        "nombre": "Agente Personalizado",
+        "descripcion": "Desarrollo a medida para necesidades especificas",
         "beneficios": [
-            "Diseño completamente personalizado",
-            "Integración con cualquier sistema existente",
-            "Entrenamiento con tus datos específicos",
-            "Soporte y mantenimiento dedicado",
-            "Escalabilidad según tu crecimiento"
+            "Disenado 100% para tu negocio",
+            "Integraciones especiales",
+            "Flujos personalizados",
+            "Soporte dedicado",
+            "Escalable segun crezcas"
         ],
         "casos_uso": [
-            "Cualquier industria",
-            "Procesos únicos de negocio",
-            "Integraciones complejas",
-            "Requerimientos especiales"
+            "Empresas medianas",
+            "Necesidades especiales",
+            "Integraciones complejas"
         ],
-        "precio_base": "Cotización personalizada",
-        "tiempo_implementacion": "4-8 semanas"
+        "precio_setup": "Desde $2,500,000 COP",
+        "precio_mensual": "Desde $400,000 COP/mes",
+        "precio_base": "Cotizacion personalizada",
+        "tiempo_implementacion": "10-15 dias"
     }
 }
 
 
 INDUSTRY_SOLUTIONS: Dict[str, List[str]] = {
-    "retail": ["asistente_atencion_cliente", "asistente_ventas"],
-    "salud": ["asistente_medico", "asistente_atencion_cliente"],
-    "educacion": ["asistente_educativo", "asistente_atencion_cliente"],
-    "legal": ["asistente_legal", "asistente_atencion_cliente"],
-    "tecnologia": ["asistente_ventas", "asistente_atencion_cliente", "asistente_rrhh"],
-    "finanzas": ["asistente_atencion_cliente", "asistente_ventas"],
-    "inmobiliaria": ["asistente_ventas", "asistente_atencion_cliente"],
-    "recursos_humanos": ["asistente_rrhh"],
-    "otro": ["agente_personalizado", "asistente_atencion_cliente"]
+    "retail": ["agente_whatsapp", "agente_ventas"],
+    "salud": ["agente_citas", "agente_whatsapp"],
+    "educacion": ["agente_whatsapp", "agente_basico"],
+    "legal": ["agente_citas", "agente_whatsapp"],
+    "tecnologia": ["agente_ventas", "agente_whatsapp"],
+    "finanzas": ["agente_whatsapp", "agente_ventas"],
+    "inmobiliaria": ["agente_ventas", "agente_whatsapp"],
+    "recursos_humanos": ["agente_whatsapp", "agente_basico"],
+    "gastronomia": ["agente_whatsapp", "agente_basico"],
+    "otro": ["agente_whatsapp", "agente_personalizado"]
 }
 
 
