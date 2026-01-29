@@ -449,24 +449,22 @@ CONFIG_PAGE = """
             transition: transform 0.2s;
         }
         button:hover { transform: scale(1.02); }
-        .preset-btns {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
         }
-        .preset-btn {
-            padding: 8px 15px;
-            background: #f0f0f0;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+        select optgroup {
+            font-weight: bold;
+            color: #667eea;
         }
-        .preset-btn:hover {
-            border-color: #667eea;
-            background: #667eea20;
+        select option {
+            font-weight: normal;
+            color: #333;
+            padding: 8px;
         }
     </style>
 </head>
@@ -475,47 +473,71 @@ CONFIG_PAGE = """
         <h1>Configurar Demo</h1>
         <p class="subtitle">Personaliza el agente para tu cliente</p>
 
-        <div class="preset-btns">
-            <span class="preset-btn" onclick="setPreset('abogado')">Abogado</span>
-            <span class="preset-btn" onclick="setPreset('medico')">Medico</span>
-            <span class="preset-btn" onclick="setPreset('odontologo')">Odontologo</span>
-            <span class="preset-btn" onclick="setPreset('psicologo')">Psicologo</span>
-            <span class="preset-btn" onclick="setPreset('veterinaria')">Veterinaria</span>
-            <span class="preset-btn" onclick="setPreset('restaurante')">Restaurante</span>
-            <span class="preset-btn" onclick="setPreset('cafeteria')">Cafeteria</span>
-            <span class="preset-btn" onclick="setPreset('bar')">Bar/Discoteca</span>
-            <span class="preset-btn" onclick="setPreset('inmobiliaria')">Inmobiliaria</span>
-            <span class="preset-btn" onclick="setPreset('constructora')">Constructora</span>
-            <span class="preset-btn" onclick="setPreset('ecommerce')">E-commerce</span>
-            <span class="preset-btn" onclick="setPreset('tienda')">Tienda Fisica</span>
-            <span class="preset-btn" onclick="setPreset('gimnasio')">Gimnasio</span>
-            <span class="preset-btn" onclick="setPreset('spa')">Spa/Belleza</span>
-            <span class="preset-btn" onclick="setPreset('peluqueria')">Peluqueria</span>
-            <span class="preset-btn" onclick="setPreset('hotel')">Hotel</span>
-            <span class="preset-btn" onclick="setPreset('agencia_viajes')">Agencia Viajes</span>
-            <span class="preset-btn" onclick="setPreset('contador')">Contador</span>
-            <span class="preset-btn" onclick="setPreset('academia')">Academia/Cursos</span>
-            <span class="preset-btn" onclick="setPreset('colegio')">Colegio</span>
-            <span class="preset-btn" onclick="setPreset('universidad')">Universidad</span>
-            <span class="preset-btn" onclick="setPreset('aseguradora')">Aseguradora</span>
-            <span class="preset-btn" onclick="setPreset('banco')">Banco/Finanzas</span>
-            <span class="preset-btn" onclick="setPreset('taller')">Taller Mecanico</span>
-            <span class="preset-btn" onclick="setPreset('concesionario')">Concesionario</span>
-            <span class="preset-btn" onclick="setPreset('ferreteria')">Ferreteria</span>
-            <span class="preset-btn" onclick="setPreset('farmacia')">Farmacia</span>
-            <span class="preset-btn" onclick="setPreset('optica')">Optica</span>
-            <span class="preset-btn" onclick="setPreset('funeraria')">Funeraria</span>
-            <span class="preset-btn" onclick="setPreset('imprenta')">Imprenta</span>
-            <span class="preset-btn" onclick="setPreset('software')">Software/Tech</span>
-            <span class="preset-btn" onclick="setPreset('marketing')">Agencia Marketing</span>
-            <span class="preset-btn" onclick="setPreset('arquitecto')">Arquitecto</span>
-            <span class="preset-btn" onclick="setPreset('fotografo')">Fotografo</span>
-            <span class="preset-btn" onclick="setPreset('eventos')">Eventos/Bodas</span>
-            <span class="preset-btn" onclick="setPreset('transporte')">Transporte/Logistica</span>
-            <span class="preset-btn" onclick="setPreset('limpieza')">Servicios Limpieza</span>
-            <span class="preset-btn" onclick="setPreset('seguridad')">Seguridad Privada</span>
-            <span class="preset-btn" onclick="setPreset('coworking')">Coworking</span>
-            <span class="preset-btn" onclick="setPreset('notaria')">Notaria</span>
+        <div class="form-group">
+            <label>Tipo de negocio (plantilla)</label>
+            <select id="presetSelect" onchange="setPreset(this.value)">
+                <option value="">-- Selecciona una industria --</option>
+                <optgroup label="Salud">
+                    <option value="medico">Medico / Clinica</option>
+                    <option value="odontologo">Odontologo</option>
+                    <option value="psicologo">Psicologo</option>
+                    <option value="veterinaria">Veterinaria</option>
+                    <option value="farmacia">Farmacia</option>
+                    <option value="optica">Optica</option>
+                </optgroup>
+                <optgroup label="Legal y Finanzas">
+                    <option value="abogado">Abogado / Bufete</option>
+                    <option value="notaria">Notaria</option>
+                    <option value="contador">Contador</option>
+                    <option value="aseguradora">Aseguradora</option>
+                    <option value="banco">Banco / Finanzas</option>
+                </optgroup>
+                <optgroup label="Gastronomia">
+                    <option value="restaurante">Restaurante</option>
+                    <option value="cafeteria">Cafeteria</option>
+                    <option value="bar">Bar / Discoteca</option>
+                </optgroup>
+                <optgroup label="Comercio">
+                    <option value="ecommerce">E-commerce</option>
+                    <option value="tienda">Tienda Fisica</option>
+                    <option value="ferreteria">Ferreteria</option>
+                    <option value="concesionario">Concesionario Autos</option>
+                </optgroup>
+                <optgroup label="Inmobiliario">
+                    <option value="inmobiliaria">Inmobiliaria</option>
+                    <option value="constructora">Constructora</option>
+                    <option value="arquitecto">Arquitecto</option>
+                </optgroup>
+                <optgroup label="Belleza y Bienestar">
+                    <option value="gimnasio">Gimnasio</option>
+                    <option value="spa">Spa / Belleza</option>
+                    <option value="peluqueria">Peluqueria</option>
+                </optgroup>
+                <optgroup label="Turismo">
+                    <option value="hotel">Hotel</option>
+                    <option value="agencia_viajes">Agencia de Viajes</option>
+                </optgroup>
+                <optgroup label="Educacion">
+                    <option value="academia">Academia / Cursos</option>
+                    <option value="colegio">Colegio</option>
+                    <option value="universidad">Universidad</option>
+                </optgroup>
+                <optgroup label="Tecnologia y Marketing">
+                    <option value="software">Software / Tech</option>
+                    <option value="marketing">Agencia Marketing</option>
+                    <option value="imprenta">Imprenta</option>
+                </optgroup>
+                <optgroup label="Servicios">
+                    <option value="taller">Taller Mecanico</option>
+                    <option value="fotografo">Fotografo</option>
+                    <option value="eventos">Eventos / Bodas</option>
+                    <option value="transporte">Transporte / Logistica</option>
+                    <option value="limpieza">Servicios de Limpieza</option>
+                    <option value="seguridad">Seguridad Privada</option>
+                    <option value="funeraria">Funeraria</option>
+                    <option value="coworking">Coworking</option>
+                </optgroup>
+            </select>
         </div>
 
         <form action="/demo" method="GET">
