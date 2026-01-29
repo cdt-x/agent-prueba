@@ -1,0 +1,551 @@
+{
+  "leads": [
+    {
+      "conversation_id": "3a0bb94c",
+      "created_at": "2026-01-29T12:30:56.087060",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "d901014b",
+      "created_at": "2026-01-29T12:31:02.861722",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "e043eefd",
+      "created_at": "2026-01-29T12:37:49.028792",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "cb98085e",
+      "created_at": "2026-01-29T12:38:08.773616",
+      "email": "alejodandi4@gmail.com",
+      "telefono": "3228349585",
+      "nombre": null,
+      "updated_at": "2026-01-29T12:39:56.876054"
+    },
+    {
+      "conversation_id": "cc4aae8f",
+      "created_at": "2026-01-29T13:10:39.703787",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "1d9688cf",
+      "created_at": "2026-01-29T14:10:38.774518",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "b8f93cfa",
+      "created_at": "2026-01-29T14:13:18.699240",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "dcea0fed",
+      "created_at": "2026-01-29T14:25:50.274959",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "0536fe4f",
+      "created_at": "2026-01-29T14:26:45.134662",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "187a544b",
+      "created_at": "2026-01-29T14:32:04.284209",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "561bbf91",
+      "created_at": "2026-01-29T15:07:58.680997",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "b7c2bc56",
+      "created_at": "2026-01-29T15:11:02.459180",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "ebd3d9c0",
+      "created_at": "2026-01-29T15:14:27.677694",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "1070321b",
+      "created_at": "2026-01-29T15:14:38.795305",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "0e3fcdb4",
+      "created_at": "2026-01-29T15:16:33.793181",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "3273680c",
+      "created_at": "2026-01-29T15:18:31.344278",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "b0c33def",
+      "created_at": "2026-01-29T15:21:20.832121",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "81d5a8aa",
+      "created_at": "2026-01-29T15:25:43.572147",
+      "email": "alejodandi4@gmail.com",
+      "telefono": "3228349585",
+      "nombre": null,
+      "updated_at": "2026-01-29T15:29:24.969691"
+    },
+    {
+      "conversation_id": "1046b34d",
+      "created_at": "2026-01-29T15:28:25.199733",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "9c7d4077",
+      "created_at": "2026-01-29T15:30:55.952562",
+      "email": "alejodandi4@gmail.com",
+      "telefono": null,
+      "nombre": null,
+      "updated_at": "2026-01-29T15:33:00.488656"
+    },
+    {
+      "conversation_id": "63a0d646",
+      "created_at": "2026-01-29T15:36:07.230842",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "39b907bc",
+      "created_at": "2026-01-29T15:36:31.918190",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "64bb3b6b",
+      "created_at": "2026-01-29T15:36:59.596377",
+      "email": "alejodandi4@gmail.com",
+      "telefono": null,
+      "nombre": null,
+      "updated_at": "2026-01-29T15:38:06.090001"
+    },
+    {
+      "conversation_id": "c8e4172d",
+      "created_at": "2026-01-29T15:42:19.814114",
+      "email": "alejodandi4@gmail.com",
+      "telefono": null,
+      "nombre": null,
+      "updated_at": "2026-01-29T15:44:14.234133"
+    },
+    {
+      "conversation_id": "da23d9f4",
+      "created_at": "2026-01-29T15:42:47.848435",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "812cf1cf",
+      "created_at": "2026-01-29T15:50:23.000263",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "2a861f7b",
+      "created_at": "2026-01-29T15:51:04.757224",
+      "email": "alejodandi4@gmail.com",
+      "telefono": null,
+      "nombre": null,
+      "updated_at": "2026-01-29T15:53:36.151391"
+    },
+    {
+      "conversation_id": "b0603749",
+      "created_at": "2026-01-29T15:58:20.601296",
+      "email": null,
+      "telefono": null,
+      "nombre": null
+    },
+    {
+      "conversation_id": "5282cd83",
+      "created_at": "2026-01-29T15:59:26.929216",
+      "email": "alejodandi4@gmail.com",
+      "telefono": null,
+      "nombre": null,
+      "updated_at": "2026-01-29T16:00:23.119593"
+    }
+  ],
+  "conversations": {
+    "3a0bb94c": [],
+    "d901014b": [],
+    "e043eefd": [],
+    "cb98085e": [
+      {
+        "role": "user",
+        "content": "hola, soy un abogado, quiero saber como el agent me podria ayudar"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Me alegra que estés interesado en nuestros servicios. Nuestro agente de automatización de atención al cliente puede ayudarte a gestionar consultas y casos de manera eficiente, permitiéndote enfocarte en tu trabajo como abogado. ¿Quieres saber más sobre cómo podemos personalizar nuestra solución para tu despacho?"
+      },
+      {
+        "role": "user",
+        "content": "en leyes, jurispudencia"
+      },
+      {
+        "role": "assistant",
+        "content": "Nuestro Asistente Legal puede ser de gran ayuda en eso. Puede ayudarte a buscar y analizar jurisprudencia, así como a organizar y mantener actualizada tu base de conocimientos legales. Esto te permitiría ahorrar tiempo y enfocarte en la estrategia y argumentación de tus casos. ¿Te gustaría saber más sobre cómo funciona nuestro Asistente Legal y cómo puede adaptarse a tus necesidades específicas?"
+      },
+      {
+        "role": "user",
+        "content": "si me gustaria saber"
+      },
+      {
+        "role": "assistant",
+        "content": "Nuestro Asistente Legal puede ayudarte a buscar y analizar jurisprudencia, identificar patrones y tendencias, y proporcionarte información relevante para tus casos. También puede ayudarte a generar documentos y respuestas automatizadas, lo que te ahorrará tiempo y esfuerzo. Me gustaría agendar una demostración para mostrarle cómo funciona en vivo. Para enviarte la información, ¿me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "alejodandi4@gmail.com y por si necesitas mi numero de telefono aca esta, 3228349585"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Excelente! Confirmo que he anotado correctamente tu correo electrónico: alejodandi4@gmail.com y tu teléfono: 3228349585. Te enviaré un correo con la información y te llamaré pronto para agendar una demostración personalizada de nuestro Asistente Legal. ¡Muchas gracias por considerar QORAX! ¿Te parece bien si te llamo mañana para coordinar la demostración?"
+      },
+      {
+        "role": "user",
+        "content": "hola, me interesa saber sobre sus servicios"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola de nuevo! Me alegra que estés interesado en nuestros servicios. En QORAX, ofrecemos soluciones de automatización para atención al cliente, ventas y soporte. Tenemos diferentes agentes especializados, como el Agente de Atención 24/7, el Agente de Ventas y el Asistente Legal, que pueden ayudarte a mejorar la eficiencia y productividad de tu negocio. ¿Hay algún área en particular que te gustaría conocer más a fondo?"
+      }
+    ],
+    "cc4aae8f": [],
+    "1d9688cf": [],
+    "b8f93cfa": [],
+    "dcea0fed": [],
+    "0536fe4f": [],
+    "187a544b": [],
+    "561bbf91": [],
+    "b7c2bc56": [],
+    "ebd3d9c0": [],
+    "1070321b": [],
+    "0e3fcdb4": [
+      {
+        "role": "user",
+        "content": "HOLA, SOY ABOGADO"
+      },
+      {
+        "role": "assistant",
+        "content": "Hola, gracias por contactar a QORAX. ¿En qué podemos ayudarte hoy? ¿Necesitas información sobre cómo podemos automatizar la atención al cliente o soporte para tu despacho?"
+      },
+      {
+        "role": "user",
+        "content": "atencion al cliente y soporte para tu despacho"
+      },
+      {
+        "role": "assistant",
+        "content": "Entiendo. Nuestro Asistente Legal puede ser de gran ayuda para automatizar la atención al cliente y soporte en tu despacho, ahorrándote tiempo y recursos. ¿Te gustaría saber más sobre cómo funciona y cómo puede beneficiar a tu negocio? ¿O prefieres agendar una demo para verlo en acción?"
+      }
+    ],
+    "3273680c": [
+      {
+        "role": "user",
+        "content": "hola soy abogado"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Bienvenido a QORAX. ¿En qué podemos ayudarte hoy? ¿Necesitas información sobre cómo nuestra automatización de atención al cliente puede beneficiar a tu despacho?"
+      },
+      {
+        "role": "user",
+        "content": "necesito que me ayudes guardando archivos de mis clientes"
+      },
+      {
+        "role": "assistant",
+        "content": "Entiendo. La organización y seguridad de los archivos de los clientes es fundamental para un despacho jurídico. Nuestro Asistente Legal podría ser una excelente opción para ti, ya que te permite almacenar y gestionar de manera segura y eficiente los documentos de tus clientes. ¿Te gustaría saber más sobre cómo funciona y cómo podría ayudarte a ahorrar tiempo y reducir costos?"
+      }
+    ],
+    "test123": [
+      {
+        "role": "user",
+        "content": "hola"
+      },
+      {
+        "role": "assistant",
+        "content": "Hola, bienvenido a QORAX. ¿En qué puedo ayudarte hoy? Estoy aquí para atenderte 24/7."
+      }
+    ],
+    "b0c33def": [
+      {
+        "role": "user",
+        "content": "hola"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Bienvenido a QORAX. ¿En qué puedo ayudarte hoy?"
+      },
+      {
+        "role": "user",
+        "content": "soy abogado, necestio de tu ayuda"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Claro! Me alegra poder ayudarte. ¿Necesitas ayuda con la automatización de atención al cliente o soporte para tu despacho jurídico?"
+      },
+      {
+        "role": "user",
+        "content": "con guardar documentos de mis clientes y soporte en mi despacho juridico"
+      },
+      {
+        "role": "assistant",
+        "content": "Entendido. Nuestros servicios de automatización pueden ayudarte a organizar y guardar documentos de tus clientes de manera segura y eficiente. ¿Te gustaría saber más sobre cómo podemos ayudarte a mejorar la gestión de tu despacho jurídico? Perfecto! Te paso con Carlos, nuestro experto en ventas, para darte toda la info..."
+      },
+      {
+        "role": "user",
+        "content": "como me puedes ayudar en mi despacho?"
+      },
+      {
+        "role": "assistant",
+        "content": "Nuestro Asistente Legal puede ayudarte a automatizar tareas administrativas y de atención al cliente, como guardar y organizar documentos, responder a consultas frecuentes y programar citas. Esto te permitiría enfocarte en lo que realmente importa: brindar asesoría jurídica de calidad a tus clientes. ¿Te gustaría saber más sobre cómo funciona? Para enviarte la info, me compartes tu correo?"
+      }
+    ],
+    "81d5a8aa": [
+      {
+        "role": "user",
+        "content": "hola"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Bienvenido a QORAX. ¿En qué puedo ayudarte hoy? Estoy aquí para responder tus preguntas y brindarte información sobre nuestros servicios de automatización de atención al cliente, ventas y soporte. ¿Tienes alguna duda en particular sobre cómo podemos ayudarte?"
+      },
+      {
+        "role": "user",
+        "content": "soy un medico y necesito que me ayudes"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Claro! Me alegra poder ayudarte. Nuestro Asistente Médico puede ser de gran utilidad para ti, ya que ofrece orientación médica y gestión de citas. ¿En qué área específica necesitas ayuda? ¿Quieres saber más sobre cómo nuestro Asistente Médico puede apoyarte en tu práctica médica?"
+      },
+      {
+        "role": "user",
+        "content": "dame opciones de como me podrias ayudar"
+      },
+      {
+        "role": "assistant",
+        "content": "Nuestros servicios pueden ayudarte de varias maneras: podemos automatizar la atención al cliente para que puedas enfocarte en tus pacientes, o nuestro Agente de Ventas puede ayudarte a capturar leads y aumentar tu base de pacientes. También podemos ofrecerte asesoramiento legal y jurisprudencia a través de nuestro Asistente Legal. Para enviarte más información, ¿me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "alejodandi4@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Excelente, te enviaré más información sobre cómo nuestros servicios pueden ayudarte en tu práctica médica. También puedo contactarte por teléfono para discutir más a fondo cómo podemos apoyarte, ¿me puedes proporcionar tu número de teléfono?"
+      },
+      {
+        "role": "user",
+        "content": "3228349585"
+      },
+      {
+        "role": "assistant",
+        "content": "Gracias por proporcionarme tu información de contacto. Un asesor se pondrá en contacto contigo pronto para discutir cómo nuestros servicios pueden ayudarte a mejorar tu práctica médica y atender tus necesidades. Estoy aquí si tienes alguna otra pregunta o necesitas ayuda adicional. ¡Que tengas un excelente día!"
+      }
+    ],
+    "1046b34d": [],
+    "9c7d4077": [
+      {
+        "role": "user",
+        "content": "hola"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Bienvenido a QORAX. ¿En qué puedo ayudarte hoy? Estoy aquí para responder a tus preguntas y proporcionarte información sobre nuestros servicios de automatización de atención al cliente, ventas y soporte."
+      },
+      {
+        "role": "user",
+        "content": "soy mecanico"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Genial! Como mecánico, es importante tener un buen sistema de gestión y atención al cliente. Nuestros agentes de IA pueden ayudarte a automatizar tareas y mejorar la experiencia del cliente. ¿Te gustaría saber más sobre cómo podemos ayudarte a optimizar tu negocio?"
+      },
+      {
+        "role": "user",
+        "content": "cuales opciones me podrias dar para que me ayudes"
+      },
+      {
+        "role": "assistant",
+        "content": "Puedo ayudarte a automatizar la atención al cliente con nuestro Agente de Atención 24/7, o incluso a incrementar tus ventas con nuestro Agente de Ventas. También puedo explicarte cómo nuestros agentes de IA pueden ayudarte a gestionar tus recursos de manera más eficiente. ¿Te interesa saber más sobre alguna de estas opciones? Para enviarte más información, me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "me puedes ayudar a gestionar mis recursos"
+      },
+      {
+        "role": "assistant",
+        "content": "Nuestro Agente RRHH puede ayudarte a gestionar tus recursos humanos de manera más eficiente, desde la programación de turnos hasta la administración de personal. También puedo explicarte cómo nuestros agentes de IA pueden ayudarte a reducir costos y mejorar la productividad. ¿Quieres saber más al respecto? Para enviarte más información, me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "pero no sobre recuros humanos, sobre los recuros del taller"
+      },
+      {
+        "role": "assistant",
+        "content": "Entiendo mejor ahora. Nuestros agentes de IA pueden ayudarte a gestionar los recursos de tu taller, como la organización de herramientas, materiales y equipos, así como la programación de mantenimientos y reparaciones. ¿Te gustaría saber más sobre cómo podemos ayudarte a optimizar la gestión de tu taller? Para enviarte más información, me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "alejodandi4@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Genial, te enviaré más información sobre cómo nuestros agentes de IA pueden ayudarte a gestionar los recursos de tu taller. También te pediría tu número de teléfono para que un asesor pueda contactarte y darte más detalles personalizados. ¿Cuál es tu número de teléfono?"
+      }
+    ],
+    "63a0d646": [],
+    "39b907bc": [],
+    "64bb3b6b": [
+      {
+        "role": "user",
+        "content": "hola, soy carpirtero, quiero que me ayudes"
+      },
+      {
+        "role": "assistant",
+        "content": "Hola Carpirtero, gracias por contactarnos. ¿En qué puedo ayudarte hoy? ¿Tienes alguna pregunta sobre nuestros servicios de automatización de atención al cliente, ventas o soporte?"
+      },
+      {
+        "role": "user",
+        "content": "dime como me puedes ayudar"
+      },
+      {
+        "role": "assistant",
+        "content": "En QORAX, podemos ayudarte a automatizar tus procesos de atención al cliente, ventas y soporte con nuestros agentes de IA, lo que te permitirá ahorrar tiempo y aumentar la eficiencia en tu negocio. ¿Te gustaría saber más sobre cómo nuestros agentes de IA pueden ayudarte?"
+      },
+      {
+        "role": "user",
+        "content": "si, me puedes mandar info a este correo, alejodandi4@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Genial, Alejo. Para enviarte más información personalizada, también me gustaría tener tu número de teléfono, ¿podrías compartirlo conmigo? Así podré asegurarme de que recibas todo lo que necesitas para impulsar tu negocio con QORAX."
+      }
+    ],
+    "c8e4172d": [
+      {
+        "role": "user",
+        "content": "quiero que me mandes un correo con la info para mi agente, soy cirujano"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Claro! Para enviarte más información sobre cómo nuestros agentes de IA pueden ayudar en tu consulta médica, me compartes tu correo? De esta manera, podré enviarte detalles sobre nuestros servicios de automatización de atención al cliente y soporte, que pueden ser especialmente útiles para un profesional como tú."
+      },
+      {
+        "role": "user",
+        "content": "alejodandi4@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Genial, alejodandi4@gmail.com. Te enviaré información detallada sobre cómo nuestros agentes de IA, como el Asistente Médico, pueden ayudarte a optimizar la atención a tus pacientes y gestionar tu consulta de manera más eficiente. ¿Me puedo poner en contacto contigo también por teléfono para discutir más a fondo cómo podemos ayudarte?"
+      }
+    ],
+    "da23d9f4": [],
+    "812cf1cf": [],
+    "2a861f7b": [
+      {
+        "role": "user",
+        "content": "hola"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Bienvenido a QORAX. ¿En qué puedo ayudarte hoy? Estoy aquí para responder a tus preguntas y proporcionarte información sobre nuestros servicios de automatización de atención al cliente, ventas y soporte."
+      },
+      {
+        "role": "user",
+        "content": "soy abogado, necesito que me ayudes con mi despacho"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Claro! Nuestro Asistente Legal puede ser de gran ayuda para ti. Puedo explicarte cómo nuestros agentes de IA pueden automatizar tareas y mejorar la eficiencia en tu despacho. ¿Te gustaría saber más sobre cómo podemos ayudarte? Para enviarte más información, me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "alejodandi4@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Genial, te enviaré más información sobre nuestros servicios y cómo pueden beneficiar a tu despacho. Nuestro Asistente Legal puede ayudarte con consultas legales y jurisprudencia, y también podemos automatizar la atención al cliente y el soporte. ¿Me das también tu número de teléfono para que podamos seguir en contacto?"
+      }
+    ],
+    "b0603749": [],
+    "5282cd83": [
+      {
+        "role": "user",
+        "content": "hola, soy un abogado y quiero que me ayudes con mi bufete"
+      },
+      {
+        "role": "assistant",
+        "content": "¡Hola! Me alegra ayudarte. Nuestro Asistente Legal puede ser de gran ayuda para tu bufete, ofreciendo consultas legales y jurisprudencia. ¿En qué área específica crees que podríamos apoyarte?"
+      },
+      {
+        "role": "user",
+        "content": "a gestionar mi bufete"
+      },
+      {
+        "role": "assistant",
+        "content": "Nuestro Asistente Legal puede ayudarte a automatizar tareas y mejorar la eficiencia en tu bufete, mientras que nuestro Agente de Atención 24/7 puede ayudar a manejar consultas y citas de clientes. Para enviarte más información, ¿me compartes tu correo?"
+      },
+      {
+        "role": "user",
+        "content": "alejodandi4@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Excelente, te enviaremos información detallada sobre cómo nuestros agentes de IA pueden ayudar a tu bufete. También te llamaremos para discutir más a fondo tus necesidades, ¿cuál es tu número de teléfono para que podamos contactarte?"
+      }
+    ]
+  },
+  "config": {
+    "nombre_empresa": "QORAX",
+    "tipo_negocio": "agentes de IA",
+    "servicios": "automatizacion de atencion al cliente, ventas, soporte",
+    "horario": "24/7"
+  }
+}

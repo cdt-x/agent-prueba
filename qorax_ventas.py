@@ -4,7 +4,7 @@
 QORAX VENTAS - Agente de Ventas con Panel de Control
 """
 
-from flask import Flask, render_template_string, request, jsonify, redirect
+from flask import Flask, render_template_string, request, jsonify, redirect, send_from_directory
 from dotenv import load_dotenv
 from groq import Groq
 from datetime import datetime
@@ -73,38 +73,188 @@ def send_lead_notification(lead_data):
     """
     send_email_async(GMAIL_USER, subject, body)
 
-def send_welcome_email(to_email, nombre_empresa):
-    """Envia correo de bienvenida al cliente"""
-    subject = f"Gracias por contactar a {nombre_empresa}"
+def detect_business_type(conversation):
+    """Detecta el tipo de negocio del cliente basado SOLO en mensajes del usuario"""
+    # Solo analizar mensajes del usuario, no del bot
+    user_messages = [msg.get("content", "") for msg in conversation if msg.get("role") == "user"]
+    text = " ".join(user_messages).lower()
+
+    business_types = {
+        "abogado": {
+            "keywords": ["abogado", "legal", "juridico", "demanda", "caso", "bufete", "derecho", "despacho", "firma legal", "leyes"],
+            "title": "Soluciones IA para Firmas Legales",
+            "intro": "Optimiza la gestion de tu firma mientras te enfocas en lo que mejor haces: defender a tus clientes.",
+            "benefits": [
+                ("Atencion a Clientes 24/7", "Captura consultas legales y agenda citas aunque no estes disponible"),
+                ("Seguimiento de Casos", "Mantiene a tus clientes informados sobre el estado de sus casos"),
+                ("Filtro de Consultas", "Califica prospectos y filtra casos que no son de tu especialidad")
+            ]
+        },
+        "doctor": {
+            "keywords": ["doctor", "medico", "clinica", "hospital", "paciente", "consultorio", "salud", "medicina", "cita medica"],
+            "title": "Soluciones IA para Profesionales de la Salud",
+            "intro": "Entendemos que tu tiempo debe estar enfocado en tus pacientes, no en tareas administrativas.",
+            "benefits": [
+                ("Agendamiento Inteligente", "Tus pacientes reservan citas 24/7 sin saturar tu recepcion"),
+                ("Recordatorios de Citas", "Reduce las inasistencias con confirmaciones automaticas"),
+                ("Triaje Preliminar", "El agente recopila sintomas antes de la consulta para optimizar tu tiempo")
+            ]
+        },
+        "mecanico": {
+            "keywords": ["mecanico", "taller", "vehiculo", "motor", "frenos", "aceite", "llantas", "repuestos", "taller mecanico", "carros", "autos"],
+            "title": "Soluciones IA para Talleres Mecanicos",
+            "intro": "Sabemos lo importante que es optimizar cada minuto en tu taller.",
+            "benefits": [
+                ("Agente de Citas 24/7", "Tus clientes agendan servicios, cambios de aceite y revisiones sin que tengas que contestar llamadas"),
+                ("Recordatorios Automaticos", "Notifica a tus clientes sobre mantenimientos pendientes y aumenta la retencion"),
+                ("Cotizador Inteligente", "Responde consultas sobre precios de servicios comunes al instante")
+            ]
+        },
+        "restaurante": {
+            "keywords": ["restaurante", "comida", "menu", "reservacion", "cocina", "chef", "pedido", "delivery"],
+            "title": "Soluciones IA para Restaurantes",
+            "intro": "Lleva tu restaurante al siguiente nivel con atencion automatizada.",
+            "benefits": [
+                ("Reservaciones 24/7", "Acepta reservaciones por WhatsApp o web sin perder clientes"),
+                ("Menu Digital Inteligente", "Responde preguntas sobre ingredientes, alergenos y recomendaciones"),
+                ("Pedidos Automatizados", "Gestiona pedidos para delivery o pickup sin errores")
+            ]
+        },
+        "inmobiliaria": {
+            "keywords": ["inmobiliaria", "propiedad", "casa", "apartamento", "arriendo", "venta", "bienes raices", "inmueble"],
+            "title": "Soluciones IA para Inmobiliarias",
+            "intro": "Captura mas leads y cierra mas negocios con atencion inmediata.",
+            "benefits": [
+                ("Atencion Inmediata a Leads", "Responde consultas sobre propiedades 24/7 cuando el cliente esta interesado"),
+                ("Calificacion de Prospectos", "Filtra compradores serios de curiosos automaticamente"),
+                ("Agendamiento de Visitas", "Coordina visitas a propiedades sin ir y venir de mensajes")
+            ]
+        },
+        "default": {
+            "keywords": [],
+            "title": "Soluciones IA para tu Negocio",
+            "intro": "Estamos listos para ayudarte a transformar tu negocio con inteligencia artificial.",
+            "benefits": [
+                ("Atencion 24/7", "Tus clientes reciben respuestas inmediatas a cualquier hora"),
+                ("Automatizacion de Ventas", "Captura leads y agenda reuniones mientras duermes"),
+                ("Asistentes Especializados", "Soluciones adaptadas a tu industria especifica")
+            ]
+        }
+    }
+
+    for biz_type, data in business_types.items():
+        if biz_type == "default":
+            continue
+        for keyword in data["keywords"]:
+            if keyword in text:
+                return data
+
+    return business_types["default"]
+
+def send_welcome_email(to_email, nombre_empresa, conversation=None):
+    """Envia correo de bienvenida personalizado al cliente"""
+
+    # Detectar tipo de negocio
+    biz_info = detect_business_type(conversation or [])
+
+    subject = f"{biz_info['title']} - {nombre_empresa}"
+
+    # Generar beneficios HTML
+    benefits_html = ""
+    for title, desc in biz_info["benefits"]:
+        benefits_html += f"""
+                                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 18px;">
+                                                <tr>
+                                                    <td width="50" style="vertical-align: top;">
+                                                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.1) 100%); border-radius: 10px; text-align: center; line-height: 40px; font-size: 18px;">&#10003;</div>
+                                                    </td>
+                                                    <td style="vertical-align: middle; padding-left: 15px;">
+                                                        <p style="margin: 0; color: #ffffff; font-size: 15px; font-weight: 500;">{title}</p>
+                                                        <p style="margin: 4px 0 0 0; color: #888; font-size: 13px;">{desc}</p>
+                                                    </td>
+                                                </tr>
+                                            </table>"""
+
     body = f"""
+    <!DOCTYPE html>
     <html>
-    <body style="font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5;">
-        <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px;">
-            <h2 style="color: #667eea; margin-bottom: 20px;">Hola!</h2>
-            <p>Gracias por tu interes en {nombre_empresa}.</p>
-            <p>Hemos recibido tu informacion y uno de nuestros asesores te contactara pronto.</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); min-height: 100vh;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
+            <tr>
+                <td align="center" style="padding: 40px 20px;">
+                    <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background: linear-gradient(145deg, #141428 0%, #1a1a2e 100%); border-radius: 24px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
 
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <h3 style="color: #333; margin-bottom: 10px;">Nuestros servicios:</h3>
-                <ul style="color: #666; line-height: 1.8;">
-                    <li>Agente de Atencion 24/7</li>
-                    <li>Agente de Ventas Automatizado</li>
-                    <li>Asistentes Especializados (Legal, Medico, RRHH)</li>
-                </ul>
-            </div>
+                        <!-- Header con Logo -->
+                        <tr>
+                            <td style="padding: 40px 40px 20px 40px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+                                <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: 6px; background: linear-gradient(135deg, #f4d03f 0%, #d4af37 50%, #b8960c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">QORAX</h1>
+                                <p style="margin: 8px 0 0 0; color: #888; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Inteligencia Artificial para tu Negocio</p>
+                            </td>
+                        </tr>
 
-            <p>Mientras tanto, si tienes alguna pregunta, puedes responder a este correo.</p>
+                        <!-- Contenido Principal -->
+                        <tr>
+                            <td style="padding: 40px;">
+                                <h2 style="margin: 0 0 20px 0; color: #ffffff; font-size: 28px; font-weight: 600;">Hola!</h2>
+                                <p style="margin: 0 0 15px 0; color: #c0c0c0; font-size: 16px; line-height: 1.7;">
+                                    Gracias por tu interes en <strong style="color: #d4af37;">{nombre_empresa}</strong>.
+                                </p>
+                                <p style="margin: 0 0 30px 0; color: #c0c0c0; font-size: 16px; line-height: 1.7;">
+                                    {biz_info["intro"]}
+                                </p>
 
-            <p style="margin-top: 30px; color: #888; font-size: 12px;">
-                Este es un mensaje automatico de QORAX AI.
-            </p>
-        </div>
+                                <!-- Servicios Personalizados -->
+                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(212, 175, 55, 0.15); margin: 30px 0;">
+                                    <tr>
+                                        <td style="padding: 30px;">
+                                            <h3 style="margin: 0 0 25px 0; color: #d4af37; font-size: 18px; font-weight: 600; letter-spacing: 1px;">Como podemos ayudarte</h3>
+                                            {benefits_html}
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Mensaje final -->
+                                <p style="margin: 30px 0 0 0; color: #c0c0c0; font-size: 15px; line-height: 1.7;">
+                                    Mientras tanto, si tienes alguna pregunta, puedes responder directamente a este correo.
+                                </p>
+
+                                <!-- Boton CTA -->
+                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 35px;">
+                                    <tr>
+                                        <td align="center">
+                                            <a href="https://qorax.ai" style="display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a0a0a; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 30px; letter-spacing: 1px; box-shadow: 0 8px 25px rgba(212,175,55,0.3);">Conoce mas sobre QORAX</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!-- Footer -->
+                        <tr>
+                            <td style="padding: 30px 40px; border-top: 1px solid rgba(212, 175, 55, 0.15); text-align: center;">
+                                <p style="margin: 0 0 10px 0; color: #666; font-size: 13px;">
+                                    <span style="color: #d4af37;">QORAX AI</span> - Transformamos negocios con Inteligencia Artificial
+                                </p>
+                                <p style="margin: 0; color: #555; font-size: 11px;">
+                                    Este es un mensaje automatico. Si no solicitaste informacion, puedes ignorar este correo.
+                                </p>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
     </body>
     </html>
     """
     send_email_async(to_email, subject, body)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Base de datos simple en memoria (se puede cambiar a archivo/DB)
@@ -159,8 +309,9 @@ def extract_contact_info(text, conversation_id):
 
                 if email_is_new:
                     lead["email"] = emails[0]
-                    # Enviar correo de bienvenida al cliente
-                    send_welcome_email(emails[0], DATABASE["config"]["nombre_empresa"])
+                    # Enviar correo de bienvenida personalizado al cliente
+                    conv = DATABASE.get("conversations", {}).get(conversation_id, [])
+                    send_welcome_email(emails[0], DATABASE["config"]["nombre_empresa"], conv)
                     # Notificar al vendedor
                     send_lead_notification(lead)
                     print(f"[LEAD] Nuevo email capturado: {emails[0]}")
@@ -177,55 +328,33 @@ def extract_contact_info(text, conversation_id):
                 break
 
 def get_agent_prompt(config, mode="asistente"):
-    if mode == "vendedor":
-        return f"""Eres Carlos, experto en ventas de {config['nombre_empresa']}.
+    return f"""Eres el asistente virtual de {config['nombre_empresa']}.
 
-PERSONALIDAD: Vendedor consultivo, persuasivo pero no agresivo. Calido y profesional.
-
-OBJETIVO: Cerrar ventas o agendar demos. Conseguir datos de contacto.
-
-EMPRESA: {config['nombre_empresa']}
-SERVICIOS: {config['servicios']}
-
-PRODUCTOS Y PRECIOS:
-- Agente Atencion 24/7: $250,000 COP/mes
-- Agente de Ventas: $499,000 COP/mes
-- Agente RRHH: $399,000 COP/mes
-- Asistente Legal: $599,000 COP/mes
-- Asistente Medico: $699,000 COP/mes
-- Setup unico: $1,500,000 COP
-- Prueba gratis: 14 dias
-
-TECNICAS:
-1. Entiende la necesidad antes de vender
-2. Vende beneficios, no caracteristicas
-3. Maneja objeciones con empatia
-4. Siempre busca el siguiente paso
-
-IMPORTANTE:
-- Cuando el cliente este listo, PIDE su correo y telefono para contactarlo
-- Se natural al pedir los datos: "Para enviarte la info, me compartes tu correo?"
-- Confirma los datos cuando te los den
-- Responde en espanol, maximo 3-4 oraciones"""
-    else:
-        return f"""Eres el asistente virtual de {config['nombre_empresa']}.
-
-PERSONALIDAD: Amable, profesional, eficiente. Respuestas cortas y naturales.
+PERSONALIDAD: Amable, profesional, eficiente y servicial. Respuestas claras y naturales.
 
 EMPRESA: {config['nombre_empresa']}
 SERVICIOS: {config['servicios']}
 HORARIO: {config['horario']}
 
+NUESTROS AGENTES DE IA:
+- Agente de Atencion 24/7: Atencion automatizada para clientes
+- Agente de Ventas: Automatiza ventas y captura leads
+- Agente RRHH: Gestion de recursos humanos
+- Asistente Legal: Consultas legales y jurisprudencia
+- Asistente Medico: Orientacion medica y citas
+
 TU TRABAJO:
-- Responder preguntas sobre la empresa
-- Detectar interes de compra
-- Recopilar informacion del cliente
+- Responder preguntas sobre la empresa y servicios
+- Explicar como nuestros agentes de IA pueden ayudar al cliente
+- Ser util y resolver dudas
+- Cuando el cliente muestre interes, pedirle su correo y telefono de forma natural
 
-CUANDO EL CLIENTE MUESTRE INTERES EN COMPRAR O PIDA PRECIOS:
-- Transfierelo al experto en ventas diciendo algo como:
-  "Perfecto! Te paso con Carlos, nuestro experto en ventas, para darte toda la info..."
-
-Responde en espanol, maximo 2-3 oraciones."""
+IMPORTANTE:
+- NUNCA menciones a "Carlos" ni a ningun vendedor
+- Tu eres el unico asistente, no transfieras a nadie
+- Si piden precios, di que un asesor los contactara con la info
+- Para contactarlos, pide su correo: "Para enviarte mas informacion, me compartes tu correo?"
+- Responde en espanol, maximo 2-3 oraciones"""
 
 
 # ==================== PAGINAS HTML ====================
@@ -236,132 +365,331 @@ CLIENTE_PAGE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ empresa }} - Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>{{ empresa }} - Agentes de IA</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4d03f;
+            --gold-dark: #b8960c;
+            --bg-dark: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
-        .chat-widget {
-            width: 100%;
-            max-width: 420px;
-            height: 600px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            background-image: url('/static/qorax_logo.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(10,10,10,0.95) 100%);
+            z-index: 0;
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            grid-template-rows: auto 1fr auto;
+            gap: 0;
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+        .header-subtitle {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Left Panel - Services */
+        .services-panel {
+            padding: 25px 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .services-panel::-webkit-scrollbar { width: 4px; }
+        .services-panel::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+        .welcome-text {
+            margin-bottom: 25px;
+        }
+        .welcome-text h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .welcome-text p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            flex: 1;
+        }
+        .service-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 20px 15px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .service-icon { font-size: 2rem; margin-bottom: 10px; }
+        .service-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .service-card p {
+            color: #888;
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        /* Right Panel - Chat */
+        .chat-panel {
+            background: rgba(15, 15, 15, 0.95);
+            border-left: 1px solid var(--glass-border);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            min-height: 0;
         }
         .chat-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(20, 20, 20, 0.9));
+            padding: 18px 20px;
             text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            flex-shrink: 0;
         }
-        .chat-header h1 { font-size: 1.2rem; margin-bottom: 5px; }
-        .chat-header p { font-size: 0.85rem; opacity: 0.9; }
+        .chat-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 4px;
+            letter-spacing: 2px;
+        }
+        .chat-header p { color: #888; font-size: 0.8rem; }
         .status-dot {
             display: inline-block;
-            width: 10px;
-            height: 10px;
-            background: #4ade80;
+            width: 8px; height: 8px;
+            background: #22c55e;
             border-radius: 50%;
-            margin-right: 5px;
+            margin-right: 6px;
             animation: pulse 2s infinite;
         }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
         .chat-messages {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 15px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            background: #f8f9fa;
+            background: rgba(10, 10, 10, 0.5);
+            min-height: 0;
         }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
         .message {
             max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 18px;
+            padding: 12px 15px;
+            border-radius: 16px;
             font-size: 0.9rem;
             line-height: 1.4;
             animation: slideIn 0.3s ease;
         }
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .message.bot {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
             align-self: flex-start;
-            border-bottom-left-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 4px;
         }
         .message.user {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
             align-self: flex-end;
-            border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
         }
-        .message.system {
-            background: #fef3c7;
-            color: #92400e;
-            align-self: center;
-            font-size: 0.8rem;
-            padding: 8px 15px;
-        }
-        .chat-input {
-            padding: 15px;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 10px;
-        }
-        .chat-input input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        .chat-input input:focus { border-color: #667eea; }
-        .chat-input button {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-        }
-        .chat-input button:disabled { opacity: 0.6; }
-        .typing { display: flex; gap: 5px; padding: 12px 16px; background: white; border-radius: 18px; align-self: flex-start; }
-        .typing span { width: 8px; height: 8px; background: #667eea; border-radius: 50%; animation: bounce 1.4s infinite; }
+        .typing { display: flex; gap: 4px; padding: 12px 15px; background: rgba(255,255,255,0.1); border-radius: 16px; align-self: flex-start; }
+        .typing span { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: bounce 1.4s infinite; }
         .typing span:nth-child(1) { animation-delay: -0.32s; }
         .typing span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-        .powered { text-align: center; padding: 8px; font-size: 0.7rem; color: #999; }
+
+        .chat-input {
+            padding: 15px;
+            background: rgba(20, 20, 20, 0.95);
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+        .chat-input input:focus { border-color: var(--gold); }
+        .chat-input button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .chat-input button:hover { transform: scale(1.03); }
+
+        /* Footer */
+        .footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 10px;
+            color: #555;
+            font-size: 0.75rem;
+            background: rgba(10, 10, 10, 0.9);
+            border-top: 1px solid var(--glass-border);
+        }
+        .footer span { color: var(--gold); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+            }
+            .services-panel { display: none; }
+            .chat-panel { border-left: none; }
+        }
     </style>
 </head>
 <body>
-    <div class="chat-widget">
-        <div class="chat-header">
-            <h1>{{ empresa }}</h1>
-            <p id="agentStatus"><span class="status-dot"></span>Asistente virtual</p>
+    <div class="main-container">
+        <header class="header">
+            <div>
+                <h1>QORAX</h1>
+            </div>
+            <span class="header-subtitle">Inteligencia Artificial para tu Negocio</span>
+        </header>
+
+        <div class="services-panel">
+            <div class="welcome-text">
+                <h2>Bienvenido a {{ empresa }}</h2>
+                <p>Transformamos tu negocio con agentes de IA que trabajan 24/7</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Atencion 24/7</h3>
+                    <p>Atencion automatizada las 24 horas</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Agente Ventas</h3>
+                    <p>Automatiza ventas y captura leads</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Agente RRHH</h3>
+                    <p>Gestion de recursos humanos</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚖️</div>
+                    <h3>Asistente Legal</h3>
+                    <p>Consultas y analisis juridico</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏥</div>
+                    <h3>Asistente Medico</h3>
+                    <p>Orientacion y gestion de citas</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Personalizado</h3>
+                    <p>Agentes para tu industria</p>
+                </div>
+            </div>
         </div>
-        <div class="chat-messages" id="messages">
-            <div class="message bot">Hola! Bienvenido a {{ empresa }}. ¿En que puedo ayudarte?</div>
+
+        <div class="chat-panel">
+            <div class="chat-header">
+                <h2>Asistente QORAX</h2>
+                <p><span class="status-dot"></span>En linea</p>
+            </div>
+            <div class="chat-messages" id="messages">
+                <div class="message bot">Hola! Soy el asistente de {{ empresa }}. Cuentame, ¿a que te dedicas y como puedo ayudarte?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')sendMessage()">
+                <button onclick="sendMessage()" id="sendBtn">Enviar</button>
+            </div>
         </div>
-        <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')sendMessage()">
-            <button onclick="sendMessage()" id="sendBtn">Enviar</button>
-        </div>
-        <div class="powered">Powered by QORAX AI</div>
+
+        <footer class="footer">
+            Powered by <span>QORAX AI</span>
+        </footer>
     </div>
+
     <script>
         const convId = '{{ conv_id }}';
         let mode = 'asistente';
@@ -428,163 +756,407 @@ PANEL_PAGE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>QORAX - Panel de Ventas</title>
     <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4d03f;
+            --gold-dark: #b8960c;
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(20, 20, 20, 0.8);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            background-image: url('/static/qorax_logo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
         }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(10,10,10,0.95) 50%, rgba(0,0,0,0.9) 100%);
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .navbar, .container { position: relative; z-index: 1; }
+
+        /* Navbar Glassmorphism */
         .navbar {
-            background: #1e293b;
-            padding: 15px 30px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .navbar h1 {
-            font-size: 1.3rem;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .nav-links { display: flex; gap: 10px; align-items: center; }
+        .navbar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            font-weight: 500;
+        }
+        .navbar a:hover {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+        .refresh-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--bg-dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .refresh-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px; }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(20, 20, 20, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 200%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            animation: heroShine 3s ease-in-out infinite;
+        }
+        @keyframes heroShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .hero-banner h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            position: relative;
+            letter-spacing: 2px;
+        }
+        .hero-banner p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        .stat-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+        .stat-card:hover::before { opacity: 1; }
+        .stat-card h3 {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .stat-card .number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .navbar a {
-            color: #94a3b8;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-        .navbar a:hover { background: #334155; color: white; }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px;
-        }
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid #334155;
-        }
-        .stat-card h3 { color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px; }
-        .stat-card .number { font-size: 2.5rem; font-weight: bold; color: #667eea; }
+
+        /* Section Title */
         .section-title {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .leads-table {
-            background: #1e293b;
-            border-radius: 15px;
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+            border-radius: 2px;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .service-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
             overflow: hidden;
-            border: 1px solid #334155;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 0;
+            background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.1));
+            transition: height 0.4s;
         }
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(212, 175, 55, 0.15);
+        }
+        .service-card:hover::after { height: 100%; }
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+        }
+        .service-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Table */
+        .leads-table {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+        table { width: 100%; border-collapse: collapse; }
         th, td {
-            padding: 15px 20px;
+            padding: 18px 24px;
             text-align: left;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid var(--glass-border);
         }
         th {
-            background: #334155;
+            background: rgba(212, 175, 55, 0.1);
+            font-family: 'Orbitron', sans-serif;
             font-weight: 600;
-            color: #94a3b8;
-            font-size: 0.85rem;
+            color: var(--gold);
+            font-size: 0.8rem;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        tr:hover { background: #334155; }
-        .badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .badge.new { background: #22c55e20; color: #22c55e; }
-        .badge.contacted { background: #f59e0b20; color: #f59e0b; }
-        .badge.closed { background: #667eea20; color: #667eea; }
+        tr { transition: all 0.3s; }
+        tr:hover { background: rgba(212, 175, 55, 0.05); }
+
+        /* Buttons */
         .btn {
-            padding: 8px 15px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-secondary {
-            background: #334155;
-            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            transform: scale(1.05);
         }
         .btn-whatsapp {
-            background: #25d366;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
             color: white;
             text-decoration: none;
-            margin-left: 5px;
+            margin-left: 8px;
         }
+        .btn-whatsapp:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
         .btn-email {
-            background: #667eea;
-            color: white;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--bg-dark);
             text-decoration: none;
-            margin-left: 5px;
+            margin-left: 8px;
+            font-weight: 600;
         }
-        .btn:hover { transform: scale(1.05); }
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #64748b;
-        }
-        .empty-state h3 { margin-bottom: 10px; }
-        .chat-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-        }
-        .refresh-btn {
-            background: #334155;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-left: 15px;
-        }
+        .btn-email:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+
         .conversation-preview {
-            max-width: 300px;
+            max-width: 280px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #94a3b8;
+            color: var(--text-secondary);
             font-size: 0.85rem;
         }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-state h3 {
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+        }
+        .chat-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--bg-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+        .chat-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-banner { animation: fadeInUp 0.8s ease-out; }
+        .stat-card { animation: fadeInUp 0.8s ease-out backwards; }
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        .service-card { animation: fadeInUp 0.8s ease-out backwards; }
+        .service-card:nth-child(1) { animation-delay: 0.2s; }
+        .service-card:nth-child(2) { animation-delay: 0.3s; }
+        .service-card:nth-child(3) { animation-delay: 0.4s; }
+        .service-card:nth-child(4) { animation-delay: 0.5s; }
+        .service-card:nth-child(5) { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <h1>QORAX Panel de Ventas</h1>
-        <div>
-            <a href="/chat" target="_blank">Ver Chat del Cliente</a>
-            <button class="refresh-btn" onclick="location.reload()">Actualizar</button>
+        <h1>QORAX</h1>
+        <div class="nav-links">
+            <a href="/chat" target="_blank">Abrir Chat</a>
+            <button class="refresh-btn" onclick="location.reload()">Actualizar Panel</button>
         </div>
     </nav>
 
@@ -608,7 +1180,43 @@ PANEL_PAGE = """
             </div>
         </div>
 
-        <h2 class="section-title">Leads Capturados</h2>
+        <!-- Banner Principal -->
+        <div class="hero-banner">
+            <h2>Todo lo que necesitas en Agentes de IA</h2>
+            <p>Automatiza, escala y transforma tu negocio con inteligencia artificial</p>
+        </div>
+
+        <!-- Seccion de Servicios -->
+        <h2 class="section-title">Nuestros Agentes</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>Agente Atencion 24/7</h3>
+                <p>Atencion automatizada para tus clientes las 24 horas, todos los dias</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3>Agente de Ventas</h3>
+                <p>Automatiza tu proceso de ventas y captura leads calificados</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👥</div>
+                <h3>Agente RRHH</h3>
+                <p>Gestion automatizada de recursos humanos y reclutamiento</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚖️</div>
+                <h3>Asistente Legal</h3>
+                <p>Consultas legales, contratos y analisis de jurisprudencia</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏥</div>
+                <h3>Asistente Medico</h3>
+                <p>Orientacion medica, triaje y gestion de citas</p>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 40px;">Leads Capturados</h2>
 
         <div class="leads-table">
             {% if leads %}
@@ -776,13 +1384,9 @@ def api_chat():
     # Extraer datos de contacto si los hay
     extract_contact_info(message, conv_id)
 
-    # Detectar modo
+    # Siempre usar el mismo asistente
     conv = DATABASE["conversations"][conv_id]
-    transfer_keywords = ["precio", "costo", "cuanto", "comprar", "contratar", "demo", "cotizacion", "interesa"]
-    is_sales = any(kw in message.lower() for kw in transfer_keywords) or \
-               any(kw in msg["content"].lower() for msg in conv[-5:] for kw in transfer_keywords if msg["role"] == "assistant")
-
-    mode = "vendedor" if is_sales or len(conv) > 6 else "asistente"
+    mode = "asistente"
 
     try:
         messages = [{"role": "system", "content": get_agent_prompt(DATABASE["config"], mode)}]
@@ -802,7 +1406,12 @@ def api_chat():
         return jsonify({"response": assistant_msg, "mode": mode})
 
     except Exception as e:
-        return jsonify({"response": "Disculpa, tuve un problema. Intenta de nuevo.", "mode": mode})
+        print(f"[ERROR API] {e}")
+        # Mensaje de fallback mas amigable
+        fallback = "Gracias por tu mensaje. En este momento estoy procesando muchas consultas. Por favor, dejame tu correo y te contactamos pronto."
+        DATABASE["conversations"][conv_id].append({"role": "assistant", "content": fallback})
+        save_data()
+        return jsonify({"response": fallback, "mode": mode})
 
 @app.route('/api/config', methods=['POST'])
 def update_config():
@@ -815,9 +1424,9 @@ if __name__ == '__main__':
     print("\n" + "="*50)
     print("  QORAX VENTAS - Sistema Completo")
     print("="*50)
-    print("\n  Panel del vendedor: http://localhost:5050/panel")
-    print("  Chat del cliente:   http://localhost:5050/chat")
+    print("\n  Panel del vendedor: http://localhost:5055/panel")
+    print("  Chat del cliente:   http://localhost:5055/chat")
     print("\n  Presiona Ctrl+C para cerrar")
     print("="*50 + "\n")
 
-    app.run(debug=False, host='0.0.0.0', port=5050)
+    app.run(debug=False, host='0.0.0.0', port=5055)

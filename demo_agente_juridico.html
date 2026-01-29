@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente Jurídico IA - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .chat-header h1 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        .chat-header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .chat-messages {
+            padding: 20px;
+            height: 450px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message.user {
+            align-items: flex-end;
+        }
+        .message.bot {
+            align-items: flex-start;
+        }
+        .message-content {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .bot .message-content {
+            background: white;
+            color: #334155;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .bot-name {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .sentencia {
+            background: #f1f5f9;
+            border-left: 3px solid #667eea;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .sentencia-title {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.85rem;
+        }
+        .sentencia-tema {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .chat-input {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .chat-input input:focus {
+            border-color: #667eea;
+        }
+        .send-btn {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+        .features {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .feature-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>⚖️ Te amo Choco</h1>
+            <p>Tu asistente legal personalizado</p>
+            <div class="status">
+                <span class="status-dot"></span>
+                En línea - Listo para ayudarte
+            </div>
+        </div>
+
+        <div class="chat-messages">
+            <div class="message user">
+                <div class="message-content">
+                    Necesito jurisprudencia sobre responsabilidad civil por accidentes de tránsito
+                </div>
+            </div>
+
+            <div class="message bot">
+                <span class="bot-name">🤖 Agente Jurídico</span>
+                <div class="message-content">
+                    He encontrado <span class="highlight">3 sentencias relevantes</span> para tu búsqueda:
+
+                    <div class="sentencia">
+                        <div class="sentencia-title">📄 CSJ - SC2307-2018</div>
+                        <div class="sentencia-tema">Responsabilidad civil extracontractual. Se establece presunción de culpa del conductor.</div>
+                    </div>
+
+                    <div class="sentencia">
+                        <div class="sentencia-title">📄 Corte Constitucional - T-285/2019</div>
+                        <div class="sentencia-tema">Derecho a indemnización. Protección especial a víctimas vulnerables.</div>
+                    </div>
+
+                    <div class="sentencia">
+                        <div class="sentencia-title">📄 Consejo de Estado - 2017-00456</div>
+                        <div class="sentencia-tema">Responsabilidad del Estado por falla en mantenimiento vial.</div>
+                    </div>
+
+                    <div class="features">
+                        <span class="feature-tag">📋 Ver resumen</span>
+                        <span class="feature-tag">📥 Descargar PDF</span>
+                        <span class="feature-tag">🔍 Más casos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message user">
+                <div class="message-content">
+                    Explícame el artículo 2341 del Código Civil
+                </div>
+            </div>
+
+            <div class="message bot">
+                <span class="bot-name">🤖 Agente Jurídico</span>
+                <div class="message-content">
+                    <strong>📖 Art. 2341 - Responsabilidad Extracontractual</strong>
+                    <br><br>
+                    <em>"El que ha cometido un delito o culpa, que ha inferido daño a otro, es obligado a la indemnización..."</em>
+                    <br><br>
+                    <span class="highlight">En palabras simples:</span> Quien cause daño a otro por culpa, debe repararlo.
+                    <br><br>
+                    <strong>✅ Elementos a probar:</strong><br>
+                    1. Hecho dañoso<br>
+                    2. Culpa del agente<br>
+                    3. Daño sufrido<br>
+                    4. Nexo causal
+
+                    <div class="features">
+                        <span class="feature-tag">📚 Ver ejemplos</span>
+                        <span class="feature-tag">⚡ Quiz rápido</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" placeholder="Escribe tu consulta jurídica...">
+            <button class="send-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
